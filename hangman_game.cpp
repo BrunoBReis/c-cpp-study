@@ -26,10 +26,10 @@ void end_game_message();
 vector<string> read_file();
 void randomize_words();
 void add_word();
-// bool verify_vector_string(string word, vector<string> vector);
 string upper_string(string word);
 bool word_verifier(string word, string word_to_verify);
-void verify_word_in_database(vector<string> vector);
+bool verify_word_in_database(vector<string> vector, string new_word);
+void save_file(vector<string> new_list);
 
 int main()
 {
@@ -279,22 +279,27 @@ void add_word()
 {
 
     vector<string> words = read_file();
-    verify_word_in_database(words);
+
+    while (true)
+    {
+        cout << "Type a new word" << endl;
+        string new_word;
+        cin >> new_word;
+
+        new_word = upper_string(new_word);
+
+        if (verify_word_in_database(words, new_word))
+        {
+            words.push_back(new_word);
+            break;
+        }
+        else
+        {
+            continue;
+        }
+    }
+    save_file(words);
 }
-
-// bool verify_vector_string(string word, vector<string> list_name)
-// {
-//     word = upper_string(word);
-
-//     for (int i = 0; i < list_name.size(); i++)
-//     {
-//         for (int j = 0; i < word.length(); j++)
-//         {
-//             // to complete
-//         }
-//     }
-//     return false;
-// }
 
 string upper_string(string word)
 {
@@ -334,22 +339,38 @@ bool word_verifier(string word, string word_to_verify)
     }
 }
 
-void verify_word_in_database(vector<string> vector)
+bool verify_word_in_database(vector<string> name_list, string new_word)
 {
-    while (true)
+
+    for (int i = 0; i < name_list.size(); i++)
     {
-        cout << "Type a new word" << endl;
-        string new_word;
-        cin >> new_word;
-        for (int i = 0; i < vector.size(); i++)
+        if (word_verifier(new_word, name_list[i]))
         {
-            if (word_verifier(new_word, vector[i]))
-            {
-                cout << "Word is already in database" << endl;
-                add_word();
-            }
+            cout << "Word is already in database" << endl;
+            return false;
         }
-        vector.push_back(new_word);
-        break;
+    }
+    return true;
+}
+
+void save_file(vector<string> new_list)
+{
+    ofstream file;
+    file.open(file_name);
+
+    if (file.is_open())
+    {
+        file << new_list.size() << endl;
+        for (int i = 0; i < new_list.size(); i++)
+        {
+            file << new_list[i] << endl;
+        }
+
+        file.close();
+    }
+    else
+    {
+        cout << "File was not found" << endl;
+        exit(0);
     }
 }
