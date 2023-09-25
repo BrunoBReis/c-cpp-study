@@ -29,6 +29,7 @@ void add_word();
 // bool verify_vector_string(string word, vector<string> vector);
 string upper_string(string word);
 bool word_verifier(string word, string word_to_verify);
+void verify_word_in_database(vector<string> vector);
 
 int main()
 {
@@ -223,7 +224,7 @@ void end_game_message()
 
         if (answer == 'Y')
         {
-            // add_word()
+            add_word();
         }
         else
         {
@@ -276,11 +277,9 @@ void randomize_words()
 
 void add_word()
 {
-    cout << "Type a new word" << endl;
-    string new_word;
-    cin >> new_word;
 
     vector<string> words = read_file();
+    verify_word_in_database(words);
 }
 
 // bool verify_vector_string(string word, vector<string> list_name)
@@ -303,7 +302,6 @@ string upper_string(string word)
     {
         word[i] = toupper(word[i]);
     }
-    cout << word << endl;
 
     return word;
 }
@@ -333,5 +331,25 @@ bool word_verifier(string word, string word_to_verify)
     else
     {
         return false;
+    }
+}
+
+void verify_word_in_database(vector<string> vector)
+{
+    while (true)
+    {
+        cout << "Type a new word" << endl;
+        string new_word;
+        cin >> new_word;
+        for (int i = 0; i < vector.size(); i++)
+        {
+            if (word_verifier(new_word, vector[i]))
+            {
+                cout << "Word is already in database" << endl;
+                add_word();
+            }
+        }
+        vector.push_back(new_word);
+        break;
     }
 }
