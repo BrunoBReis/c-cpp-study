@@ -13,9 +13,9 @@ map<char, bool> guessed;
 vector<char> wrong_guess;
 const string file_name = "words.txt";
 
-bool word_verify(char guess);
-bool word_verify_new(char guess);
-bool verify_vector(char guess, vector<char> name);
+bool letter_verify(char guess);
+bool letter_verify_new(char guess);
+bool letter_verify_letter(char guess, vector<char> name);
 bool dont_get_right();
 bool dont_hangman();
 void screen_game();
@@ -25,6 +25,9 @@ void get_word();
 void end_game_message();
 vector<string> read_file();
 void randomize_words();
+void add_word();
+bool verify_vector_string(string word, vector<string> vector);
+string upper_string(string word);
 
 int main()
 {
@@ -67,7 +70,7 @@ int main()
     return 0;
 }
 
-bool word_verify(char guess)
+bool letter_verify(char guess)
 {
     // verify input letter in secret_word
     for (int i = 0; i < secret_word.size(); i++)
@@ -80,7 +83,7 @@ bool word_verify(char guess)
     return false;
 }
 
-bool word_verify_new(char guess)
+bool letter_verify_new(char guess)
 {
     // verify input letter in secret_word with new formatation
     for (char letter : secret_word)
@@ -93,7 +96,7 @@ bool word_verify_new(char guess)
     return false;
 }
 
-bool verify_vector(char guess, vector<char> name)
+bool letter_verify_letter(char guess, vector<char> name)
 {
     // verify if letter was alredy store in vector
     for (int i = 0; i < name.size(); i++)
@@ -180,14 +183,14 @@ void get_word()
     cout << "Your guess was " << guess << endl;
 
     // verify input letter
-    if (word_verify(guess))
+    if (letter_verify(guess))
     {
         cout << "You guessed right!" << endl;
     }
     else
     {
         cout << "You guessed wrong." << endl;
-        if (verify_vector(guess, wrong_guess))
+        if (letter_verify_letter(guess, wrong_guess))
         {
             wrong_guess.push_back(guess);
         }
@@ -210,6 +213,21 @@ void end_game_message()
     else
     {
         cout << "Congrats! The secret word is " << secret_word << "." << endl;
+
+        cout << "You want to add a new word to database?[y/n]" << endl;
+
+        char answer;
+        cin >> answer;
+        answer = toupper(answer);
+
+        if (answer == 'Y')
+        {
+            // add_word()
+        }
+        else
+        {
+            exit(0);
+        }
     }
 }
 
@@ -219,18 +237,28 @@ vector<string> read_file()
 
     file.open(file_name);
 
-    int count_words;
-    file >> count_words;
-
-    vector<string> words_file;
-
-    for (int i = 0; i < count_words; i++)
+    if (file.is_open())
     {
-        string word;
-        file >> word;
-        words_file.push_back(word);
+        int count_words;
+        file >> count_words;
+
+        vector<string> words_file;
+
+        for (int i = 0; i < count_words; i++)
+        {
+            string word;
+            file >> word;
+            words_file.push_back(word);
+        }
+
+        file.close();
+        return words_file;
     }
-    return words_file;
+    else
+    {
+        cout << "File was not found." << endl;
+        exit(0);
+    }
 }
 
 void randomize_words()
@@ -243,4 +271,38 @@ void randomize_words()
     sort = rand() % words.size();
 
     secret_word = words[sort];
+}
+
+void add_word()
+{
+    cout << "Type a new word" << endl;
+    string new_word;
+    cin >> new_word;
+
+    vector<string> words = read_file();
+}
+
+bool verify_vector_string(string word, vector<string> list_name)
+{
+    word = upper_string(word);
+
+    for (int i = 0; i < list_name.size(); i++)
+    {
+        for (int j = 0; i < word.length(); j++)
+        {
+            // to complete
+        }
+    }
+    return false;
+}
+
+string upper_string(string word)
+{
+    for (int i = 0; i < word.length(); i++)
+    {
+        word[i] = toupper(word[i]);
+    }
+    cout << word << endl;
+
+    return word;
 }
