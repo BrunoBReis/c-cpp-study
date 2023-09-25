@@ -15,7 +15,7 @@ const string file_name = "words.txt";
 
 bool letter_verify(char guess);
 bool letter_verify_new(char guess);
-bool letter_verify_letter(char guess, vector<char> name);
+bool letter_verify_vector(char guess, vector<char> name);
 bool dont_get_right();
 bool dont_hangman();
 void screen_game();
@@ -26,8 +26,9 @@ void end_game_message();
 vector<string> read_file();
 void randomize_words();
 void add_word();
-bool verify_vector_string(string word, vector<string> vector);
+// bool verify_vector_string(string word, vector<string> vector);
 string upper_string(string word);
+bool word_verifier(string word, string word_to_verify);
 
 int main()
 {
@@ -96,7 +97,7 @@ bool letter_verify_new(char guess)
     return false;
 }
 
-bool letter_verify_letter(char guess, vector<char> name)
+bool letter_verify_vector(char guess, vector<char> name)
 {
     // verify if letter was alredy store in vector
     for (int i = 0; i < name.size(); i++)
@@ -190,7 +191,7 @@ void get_word()
     else
     {
         cout << "You guessed wrong." << endl;
-        if (letter_verify_letter(guess, wrong_guess))
+        if (letter_verify_vector(guess, wrong_guess))
         {
             wrong_guess.push_back(guess);
         }
@@ -282,19 +283,19 @@ void add_word()
     vector<string> words = read_file();
 }
 
-bool verify_vector_string(string word, vector<string> list_name)
-{
-    word = upper_string(word);
+// bool verify_vector_string(string word, vector<string> list_name)
+// {
+//     word = upper_string(word);
 
-    for (int i = 0; i < list_name.size(); i++)
-    {
-        for (int j = 0; i < word.length(); j++)
-        {
-            // to complete
-        }
-    }
-    return false;
-}
+//     for (int i = 0; i < list_name.size(); i++)
+//     {
+//         for (int j = 0; i < word.length(); j++)
+//         {
+//             // to complete
+//         }
+//     }
+//     return false;
+// }
 
 string upper_string(string word)
 {
@@ -305,4 +306,32 @@ string upper_string(string word)
     cout << word << endl;
 
     return word;
+}
+
+bool word_verifier(string word, string word_to_verify)
+{
+    word = upper_string(word);
+    word_to_verify = upper_string(word_to_verify);
+
+    if (word.length() == word_to_verify.length())
+    {
+        int words_lenght = word.length();
+        int tries;
+        for (int i = 0; i < words_lenght; i++)
+        {
+            if (word[i] != word_to_verify[i])
+            {
+                return false;
+            }
+            else
+            {
+                continue;
+            }
+        }
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
