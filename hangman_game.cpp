@@ -41,9 +41,6 @@ int main()
 
     cout << secret_word << endl;
 
-    // bool dont_get_right = true;
-    // bool dont_hangman = true;
-
     // creating a loop for the game
     while (dont_get_right() && dont_hangman())
     {
@@ -192,6 +189,8 @@ void get_word()
     else
     {
         cout << "You guessed wrong." << endl;
+
+        // verifies if guess was already in guessed letters
         if (letter_verify_vector(guess, wrong_guess))
         {
             wrong_guess.push_back(guess);
@@ -222,6 +221,7 @@ void end_game_message()
         cin >> answer;
         answer = toupper(answer);
 
+        // adds answer to data base or note
         if (answer == 'Y')
         {
             add_word();
@@ -235,6 +235,8 @@ void end_game_message()
 
 vector<string> read_file()
 {
+    // opens files and add a string from data base
+
     ifstream file; // type of variable that reads files
 
     file.open(file_name);
@@ -265,6 +267,8 @@ vector<string> read_file()
 
 void randomize_words()
 {
+    // get all words in read_file() and puts in secret_word
+
     vector<string> words = read_file(); // is this some kind of polimorfism?
 
     srand(time(NULL));
