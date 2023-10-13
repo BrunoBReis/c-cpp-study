@@ -23,7 +23,9 @@ Após a criação do arquivo main é necessário para cada função um arquivo .
 
 ## 3. Arquivos .hpp
 
-Para adicionar no arquivo main todas as funções e para que não haja conflito de entre as próprias funções é necessário criar um arquvio **.hpp** para todas as funções. Da mesma forma é importante:
+Para adicionar no arquivo main todas as funções e para que não haja conflito de entre as próprias funções é necessário criar um arquivo **.hpp** para todas as funções.
+
+O objetivo deste tipo de arquvio é apenas copiar e colar o código para função main. Dessa forma é importante:
 
 + Adicionar todas bibliotecas necessárias para a declaração da função;
 + Adicionar todas funções neccessárias para a criação da função.
