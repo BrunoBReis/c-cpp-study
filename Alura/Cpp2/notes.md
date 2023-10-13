@@ -1,4 +1,4 @@
-# Organização do processo
+# Organização do processo de separação do arquivos
 
 1. Arquivo main
 2. Arquivos .cpp
