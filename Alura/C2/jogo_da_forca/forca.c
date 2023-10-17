@@ -1,10 +1,10 @@
 #include <stdio.h>
-#include <string.h>
-#include "forca.h"
 #include <stdlib.h>
+#include <string.h>
 #include <time.h>
+#include "forca.h"
 
-char palavrasecreta[20];
+char palavrasecreta[TAMANHO_PALAVRA];
 char chutes[26];
 int chutesdados = 0;
 
@@ -72,9 +72,8 @@ int ganhou()
     for (int i = 0; i < strlen(palavrasecreta); i++)
     {
         if (!jachutou(palavrasecreta[i]))
-        {
             return 0;
-        }
+        
     }
 
     return 1;
@@ -119,7 +118,7 @@ void escolhepalavra()
     srand(time(0));
     int randomico = rand() % qtddepalavras;
 
-    for (int i = 0; i < randomico; i++)
+    for (int i = 0; i <= randomico; i++)
         fscanf(f, "%s", palavrasecreta);
 
     fclose(f);
@@ -130,28 +129,39 @@ void adicionapalavra()
     char quer;
 
     printf("Você deseja adicionar alguma palavra ao banco de dados (S/N)");
-    scanf("%c", &quer);
+    scanf(" %c", &quer);
 
-    if (quer == "S")
+    if (quer == 'S')
     {
-        char novapalavra[20];
+        char novapalavra[TAMANHO_PALAVRA];
 
-        printf("Digite o nome da palavra que você deseja adicionar");
-        scanf("s", novapalavra);
+        printf("Digite o nome da palavra que você deseja adicionar\n");
+        scanf("%s", novapalavra);
         FILE *f;
 
-        f = fopen("palavras.txt", "a");
+        f = fopen("palavras.txt", "r+");
         if (f == 0)
         {
             printf("Banco de dados não está disponível");
             exit(1);
         }
 
+        // colentando o numero no começo do arquvio e incrementando
+        int qtd;
+        fscanf(f, "%d", &qtd);
+        qtd++;
+
+        // posicioanndo a leitura no começo do arquivo e alterando o valor
+        fseek(f, 0, SEEK_SET);
+        fprintf(f, "%d", qtd);
+
+        // posicioando para o final do arquvio e alterando o valor
+        fseek(f, 0, SEEK_END);
+        fprintf(f, "\n%s", novapalavra);
+
         // adicioanndo a palavra ao banco de dados
-        fprintf(f, "%s", novapalavra);
 
         fclose(f);
-
     }
 }
 
@@ -168,4 +178,6 @@ int main()
         chuta();
 
     } while (!ganhou() && !enforcou());
+
+    adicionapalavra();
 }
