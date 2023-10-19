@@ -1,35 +1,26 @@
 #include <stdio.h>
 
-int sum(int numbers[10]);
+int soma(int nums[], int times);
 
 int main()
 {
-    int number[10];
-    number[0] = 10;
-    number[1] = 10;
-    number[2] = 10;
-    number[3] = 10;
-    number[4] = 10;
-    number[5] = 10;
-    number[6] = 10;
-    number[7] = 10;
-    number[8] = 10;
-    number[9] = 10;
+    int nums[3];
+    nums[0] = 10;
+    nums[1] = 5;
+    nums[2] = 0;
 
-    int reslut = sum(number);
-    printf("%d", reslut);
-
+    printf("%d", soma(nums, 3));
 
     return 0;
 }
 
-int sum(int numbers[10])
+int soma(int nums[], int times)
 {
-    int total;
-    for (int i = 0; i < 10; i++)
+    int result;
+    for (int i = 0; i < times; i++)
     {
-        total += numbers[i];
+        result += nums[i];
     }
 
-    return total;
+    return result;
 }
