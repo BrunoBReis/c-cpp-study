@@ -1,0 +1,1 @@
+float *VetFloat(int quantidade);
