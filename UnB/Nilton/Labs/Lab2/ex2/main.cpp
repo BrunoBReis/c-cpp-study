@@ -1,70 +1,21 @@
 #include <iostream>
+#include "VetoresCPP.hpp"
 
 using namespace std;
 
-// functions
-void add_first_vector(char letter);
-void reads_all_list();
-void removes_an_character(char letter_to_remove);
-
-// global variables
-char *pvectar;
-int ptammax = 4, pqtde;
-
 int main()
 {
+    int *vet_final, quantidade; 
+    quantidade = 10;
 
-    pvectar = new char[ptammax];
+    vet_final = VetInt(quantidade);
 
-    pvectar[0] = 'b';
-    pvectar[1] = 'c';
-    pvectar[2] = 'd';
-
-    cout << "BEFORE FUNCTION" << endl;
-
-    reads_all_list();
-
-    add_first_vector('a');
-
-    cout << "AFTER FUNCTION" << endl;
-
-    reads_all_list();
-
-    cout << "AFETER REMOVES FUNCTION" << endl;
-
-    removes_an_character('a');
+    for (int i = 0; i < quantidade; i++)
+        vet_final[i] = i * 123;
     
-    reads_all_list();
 
+    for (int i = 0; i < quantidade; i ++)
+        cout << "Vetor " << i << " " <<  vet_final[i] << endl;
+     
     return 0;
-}
-
-void add_first_vector(char letter)
-{
-    for (pqtde = ptammax - 1; pqtde >= 0; pqtde--)
-    {
-        pvectar[pqtde + 1] = pvectar[pqtde];
-    }
-
-    pvectar[0] = letter;
-}
-
-void reads_all_list()
-{
-    for (pqtde = 0; pqtde < ptammax; pqtde++)
-    {
-        cout << pqtde << ' ' << pvectar[pqtde] << endl;
-    }
-}
-
-void removes_an_character(char letter_to_remove)
-{
-    for (pqtde = 0; pqtde < ptammax; pqtde++)
-    {
-        if (letter_to_remove == pvectar[pqtde])
-        {
-            pvectar[pqtde] = ' ';
-        }
-    }
-
 }

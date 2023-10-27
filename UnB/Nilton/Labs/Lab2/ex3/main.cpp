@@ -2,56 +2,69 @@
 
 using namespace std;
 
-// Functions
-bool inclusao(float *pvalores, float pv, int pcapacidade, int &ptamanho);
-void vector_size(int capacidade, float *valores);
+// functions
+void add_first_vector(char letter);
+void reads_all_list();
+void removes_an_character(char letter_to_remove);
+
+// global variables
+char *pvectar;
+int ptammax = 4, pqtde;
 
 int main()
 {
-    // definindo as caracteristicas do vetor
-    float *valores;
-    int capacidade = 10, tamanho = 0;
 
-    valores = new float[capacidade];
+    pvectar = new char[ptammax];
 
-    // alocando uns valores para o vetor
-    for (int i = 0; i < 3; i++)
-    {
-        valores[i] = (i + 1) * 2.14;
-        tamanho++;
-    }
+    pvectar[0] = 'b';
+    pvectar[1] = 'c';
+    pvectar[2] = 'd';
 
-    // utilizando a funcao inclusao apra adicionar um novo valor e verificando o tamnho do vetor
-    for (int i = 1; i < 11; i++)
-    {
-        inclusao(valores, i * 2.22, capacidade, tamanho);
-        cout << endl;
-        cout << "Tamanho da lista atual" << endl;
-        vector_size(capacidade, valores);
-        cout << endl;
-    }
+    cout << "BEFORE FUNCTION" << endl;
+
+    reads_all_list();
+
+    add_first_vector('a');
+
+    cout << "AFTER FUNCTION" << endl;
+
+    reads_all_list();
+
+    cout << "AFETER REMOVES FUNCTION" << endl;
+
+    removes_an_character('a');
+    
+    reads_all_list();
 
     return 0;
 }
 
-bool inclusao(float *pvalores, float pv, int pcapacidade, int &ptamanho)
+void add_first_vector(char letter)
 {
-    // primeiro saber o tamanho do vetor
-    if (!(ptamanho >= pcapacidade))
+    for (pqtde = ptammax - 1; pqtde >= 0; pqtde--)
     {
-        pvalores[ptamanho] = pv;
-        ptamanho++;
-        cout << "Tamanho do vetor: " << ptamanho << endl;
-        return true;
+        pvectar[pqtde + 1] = pvectar[pqtde];
     }
-    cout << "Tamanho inválido, não foi possível adicioanr outro vetor" << endl;
-    return false;
+
+    pvectar[0] = letter;
 }
 
-void vector_size(int capacidade, float *valores)
+void reads_all_list()
 {
-    for (int i = 0; i < capacidade; i++)
+    for (pqtde = 0; pqtde < ptammax; pqtde++)
     {
-        cout << i << " " << valores[i] << endl;
+        cout << pqtde << ' ' << pvectar[pqtde] << endl;
     }
+}
+
+void removes_an_character(char letter_to_remove)
+{
+    for (pqtde = 0; pqtde < ptammax; pqtde++)
+    {
+        if (letter_to_remove == pvectar[pqtde])
+        {
+            pvectar[pqtde] = ' ';
+        }
+    }
+
 }
