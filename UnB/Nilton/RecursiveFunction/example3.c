@@ -3,6 +3,5 @@
 
 int main()
 {
-    printf("Este e um teste");
-    getch();
+    elif
 }
